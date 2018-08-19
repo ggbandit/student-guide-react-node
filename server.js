@@ -23,9 +23,11 @@ mysqlConnection.connect((err) => {
 })
 
 app.get('/api/student-guide', (req,res) => {
-    mysqlConnection.query('SELECT * FROM `student-guide-list`', (err, rows, fields) => {
+    mysqlConnection.query('SELECT * FROM `student-guide-list`', (err, results, fields) => {
         if(!err) {
-            res.send(rows)
+            return res.json({
+                data: results
+            })
         } else {
             console.log(err)
         }

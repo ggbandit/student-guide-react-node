@@ -1,0 +1,24 @@
+{
+  "name": "student-guide-react-node",
+  "version": "1.0.0",
+  "description": "Student guide react and node",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "cd client && npm install",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Kittinan && Wanchalerm",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^3.6.1",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mysql": "^2.16.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}

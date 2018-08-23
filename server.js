@@ -90,6 +90,141 @@ app.put('/api/student-guide/:id',function(req, res) {
       }
   })
 
+  //api tourist table
+  app.get('/api/tourist', (req,res) => {
+    mysqlConnection.query('SELECT * FROM `tourist`', (err, results, fields) => {
+        if(!err) {
+            return res.json({
+                data: results
+            })
+        } else {
+            console.log(err)
+        }
+    })
+})
+
+app.get('/api/tourist/:id', (req,res) => {
+    mysqlConnection.query('SELECT * FROM `tourist` WHERE tourID = ?',[req.params.id], (err, rows, fields) => {
+        if(!err) {
+            res.send(rows)
+        } else {
+            console.log(err)
+        }
+    })
+})
+
+app.delete('/api/tourist/:id', (req,res) => {
+    mysqlConnection.query('DELETE FROM `tourist` WHERE tourID = ?',[req.params.id], (err, rows, fields) => {
+        if(!err) {
+            console.log('Deleted `tourist` successful.')
+            res.send('Deleted `tourist` successful.')
+        } else {
+            console.log(err)
+        }
+    })
+})
+
+app.post('/api/tourist', (req,res) => {
+    var value = {}
+      value.firstName = req.body.firstName
+      value.lastName = req.body.lastName
+      value.DOB = req.body.DOB
+      value.phone = req.body.phone
+      value.country = req.body.country
+      value.gender = req.body.gender
+    mysqlConnection.query("INSERT INTO `tourist` SET firstName = ?, lastName = ?, DOB = ?, phone = ?, country = ?, gender = ?", [value.firstName,value.lastName,value.DOB,value.phone, value.country, value.gender], function(err, results, fields) {
+      if (err) throw err
+      console.log(req.body, 'success')
+      res.send(results)
+    })
+  })
+
+app.put('/api/tourist/:id',function(req, res) {
+    var value = {}
+        value.id = req.params.id
+        value.firstName = req.body.firstName
+        value.lastName = req.body.lastName
+        value.DOB = req.body.DOB
+        value.phone = req.body.phone
+        value.country = req.body.country
+        value.gender = req.body.gender
+      if(value.id)  
+      {
+            mysqlConnection.query("UPDATE `tourist` SET firstName = ? , lastName = ?, DOB = ?, phone = ?, country = ?, gender = ? WHERE tourID = ?", [value.firstName, value.lastName, value.DOB, value.phone, value.country, value.gender, value.id],
+            function(err, results, fields) {
+            if (err) throw err
+            console.log("update id =", req.params.id, "success!")
+            res.send(results)
+        })
+      }
+      else {
+          throw err
+      }
+  })
+
+  //api trip table
+
+ app.get('/api/trip', (req,res) => {
+    mysqlConnection.query('SELECT * FROM `trip`', (err, results, fields) => {
+        if(!err) {
+            return res.json({
+                data: results
+            })
+        } else {
+            console.log(err)
+        }
+    })
+})
+
+app.delete('/api/trip/:id', (req,res) => {
+    mysqlConnection.query('DELETE FROM `trip` WHERE tripID = ?',[req.params.id], (err, rows, fields) => {
+        if(!err) {
+            console.log('Deleted `trip` successful.')
+            res.send('Deleted `trip` successful.')
+        } else {
+            console.log(err)
+        }
+    })
+})
+
+app.post('/api/trip', (req,res) => {
+    var value = {}
+      value.firstName = req.body.firstName
+      value.lastName = req.body.lastName
+      value.DOB = req.body.DOB
+      value.phone = req.body.phone
+      value.country = req.body.country
+      value.gender = req.body.gender
+    mysqlConnection.query("INSERT INTO `trip` SET firstName = ?, lastName = ?, DOB = ?, phone = ?, country = ?, gender = ?", [value.firstName,value.lastName,value.DOB,value.phone, value.country, value.gender], function(err, results, fields) {
+      if (err) throw err
+      console.log(req.body, 'success')
+      res.send(results)
+    })
+  })
+
+app.put('/api/trip/:id',function(req, res) {
+    var value = {}
+        value.id = req.params.id
+        value.firstName = req.body.firstName
+        value.lastName = req.body.lastName
+        value.DOB = req.body.DOB
+        value.phone = req.body.phone
+        value.country = req.body.country
+        value.gender = req.body.gender
+      if(value.id)  
+      {
+            mysqlConnection.query("UPDATE `trip` SET firstName = ? , lastName = ?, DOB = ?, phone = ?, country = ?, gender = ? WHERE tripID = ?", [value.firstName, value.lastName, value.DOB, value.phone, value.country, value.gender, value.id],
+            function(err, results, fields) {
+            if (err) throw err
+            console.log("update id =", req.params.id, "success!")
+            res.send(results)
+        })
+      }
+      else {
+          throw err
+      }
+  })
+
 const port = 5000
 
 app.listen(port, () => {

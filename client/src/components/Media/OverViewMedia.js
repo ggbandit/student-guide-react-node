@@ -30,7 +30,7 @@ class OverViewMedia extends Component {
                         return(
                             <Media tag="li" key={id} className="px-4 mb-4">
                                 <Media left href="#">
-                                    <img src="https://pbs.twimg.com/profile_images/378800000017423279/1a6d6f295da9f97bb576ff486ed81389_400x400.png" alt="image" style={{height: '64px', width: '64px'}}/>
+                                    <img aria-hidden src="https://pbs.twimg.com/profile_images/378800000017423279/1a6d6f295da9f97bb576ff486ed81389_400x400.png" alt="image" style={{height: '64px', width: '64px'}}/>
                                 </Media>
 
                                 <Media body className="mx-5">

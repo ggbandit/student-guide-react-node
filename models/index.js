@@ -29,4 +29,9 @@ model.studentGuides = require('./studentGuideModel')(sequelize, Sequelize)
 model.tourists = require('./touristModel')(sequelize, Sequelize)
 model.trips = require('./tripModel')(sequelize, Sequelize)
 
+model.studentGuides.hasMany(model.trips,{foreignKey: 'studentGuideId', sourceKey: 'id'});
+model.trips.belongsTo(model.studentGuides,{foreignKey: 'studentGuideId', targetKey: 'id'});
+model.tourists.hasMany(model.trips,{foreignKey: 'touristId', sourceKey: 'id'});
+model.trips.belongsTo(model.tourists,{foreignKey: 'touristId', targetKey: 'id'});
+
 module.exports = model

@@ -1,11 +1,11 @@
 const model = require('../models/index');
 
 module.exports = {
-    async index(req, res) {
+    async findAll(req, res) {
         const result = await model.studentGuides.findAll();
         return await res.status(result ? 200 : 400).send({ status: result ? 200 : 400, result });
     },
-    async find(req, res) {
+    async findById(req, res) {
         const result = await model.studentGuides.findById(req.params.id);
         return await res.status(result ? 200 : 400).send({ status: result ? 200 : 400, result });
     },

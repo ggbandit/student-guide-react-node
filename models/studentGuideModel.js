@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         role: {
             type: DataTypes.STRING(191),
-            defaultValue: 'user'
+            defaultValue: 'studentGuide'
         },
         createdAt: {
             type: DataTypes.DATE,

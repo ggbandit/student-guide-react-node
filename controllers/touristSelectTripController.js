@@ -2,31 +2,22 @@ const model = require('../models/index');
 
 module.exports = {
     async findAll(req, res) {
-        const result = await model.trips.findAll();
+        const result = await model.touristSelectTrip.findAll();
         return await res.status(result ? 200 : 400).send({ status: result ? 200 : 400, result });
     },
     async findById(req, res) {
-        const result = await model.trips.findById(req.params.id);
+        const result = await model.touristSelectTrip.findById(req.params.id);
         return await res.status(result ? 200 : 400).send({ status: result ? 200 : 400, result });
     },
     async create(req, res) {
         try {
-            if(req.body.studentGuide) {
+            if(req.body.trip && req.body.tourist) {
                 var data = {
-                    name: req.body.name,
-                    createdBy: req.body.studentGuide.role,
-                    date: req.body.date,
-                    studentGuideId: req.body.studentGuide.id
-                }
-            } else {
-                var data = {
-                    name: req.body.name,
-                    createdBy: req.body.tourist.role,
-                    date: req.body.date,
-                    touristId: req.body.tourist.id
+                    touristId: req.body.tourist.id,
+                    tripId: req.body.trip.id
                 }
             }
-            const result = await model.trips.create(data);
+            const result = await model.touristSelectTrip.create(data);
             return await res.status(result ? 200 : 400).send({ status: result ? 200 : 400, result });
         } catch (ex) {
             return await res.status(400).send({ status: 400, result: ex.errors.map(e => e.message) });
@@ -34,16 +25,16 @@ module.exports = {
     },
     async update(req, res) {
         try {
-            const result = await model.trips.update(req.body, { where: { id: req.params.id } });
+            const result = await model.touristSelectTrip.update(req.body, { where: { id: req.params.id } });
             return await res.status(result ? 200 : 400).send({
-                status: result ? 200 : 400, result: await model.trips.findById(req.params.id)
+                status: result ? 200 : 400, result: await model.touristSelectTrip.findById(req.params.id)
             });
         } catch (ex) {
             return await res.status(400).send({ status: 400, result: ex.errors.map(e => e.message) });
         }
     },
     async destroy(req, res) {
-        const result = model.trips.destroy({ where: { id: req.params.id } });
+        const result = model.touristSelectTrip.destroy({ where: { id: req.params.id } });
         return await res.status(result ? 200 : 400).send({
             status: result ? 200 : 400, result: result ? 'Successful' : 'Failure'
         });

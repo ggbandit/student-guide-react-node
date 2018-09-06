@@ -28,12 +28,12 @@ CREATE TABLE `studentguides` (
   `email` varchar(191) NOT NULL,
   `username` varchar(191) NOT NULL,
   `password` varchar(191) NOT NULL,
-  `role` varchar(191) DEFAULT 'user',
+  `role` varchar(191) DEFAULT 'studentGuide',
   `createdAt` datetime DEFAULT NULL,
   `updatedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `compositeIndex` (`email`,`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `studentguides` (
 
 LOCK TABLES `studentguides` WRITE;
 /*!40000 ALTER TABLE `studentguides` DISABLE KEYS */;
-INSERT INTO `studentguides` VALUES (1,'Boy','por@hotmail.com','por','chan','studentGuide','2018-09-05 07:05:06','2018-09-05 07:05:06'),(2,'Boy','por1@hotmail.com','por1','chan','studentGuide','2018-09-05 07:05:12','2018-09-05 07:05:12'),(3,'Boy','por1234@hotmail.com','por1234','$2a$10$c4kyM4rTs8P7OKWVuRGsxej/k3YsVrs28egbhyPgJ6TSdlSytBlr6','tourist','2018-09-05 07:39:12','2018-09-05 07:39:12'),(6,'Boy','por12345@hotmail.com','por12345','$2a$10$Zc73oEf3lapvNtb/TT6bOOKJkbDB0xogUKV8QfxMe1bsZStbnrD3a','user','2018-09-05 07:43:24','2018-09-05 07:43:24');
+INSERT INTO `studentguides` VALUES (1,'first studentGuide','firststudentGuide@hotmail.com','firststudentGuide','$2a$10$Hz1jsArYQ.QKBphKNvf5vOaIkJZ0Ngg074S0ZtelPP42bvpK/LWoi','studentGuide','2018-09-06 04:16:49','2018-09-06 04:16:49'),(2,'second studentGuide','secondstudentGuide@hotmail.com','secondstudentGuide','$2a$10$2SuyA76qLi0EgySn7A.JwOTs6qSopmvKsE.CYJMQLF6xKS9ygAhRG','studentGuide','2018-09-06 04:18:21','2018-09-06 04:18:21');
 /*!40000 ALTER TABLE `studentguides` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,8 +73,39 @@ CREATE TABLE `tourists` (
 
 LOCK TABLES `tourists` WRITE;
 /*!40000 ALTER TABLE `tourists` DISABLE KEYS */;
-INSERT INTO `tourists` VALUES (1,'Boy','por12@hotmail.com','por12','chan','tourist','2018-09-05 07:05:54','2018-09-05 07:05:54'),(2,'Boy','por123@hotmail.com','por123','chan','tourist','2018-09-05 07:06:01','2018-09-05 07:06:01');
+INSERT INTO `tourists` VALUES (1,'first tourist','firstTourist@hotmail.com','firstTourist','$2a$10$t0aExG3t.Euakw7hodqtHegEDv2Y2YI9Q0mWN2fATFrLuZO2p4xWe','tourist','2018-09-06 04:15:17','2018-09-06 04:15:17'),(2,'second tourist','secondTourist@hotmail.com','secondTourist','$2a$10$FyY0VEhn3jLYALf.tPMvOuQeOvmpeSR4Ktd5PwH5boh4m/XviNcHS','tourist','2018-09-06 04:15:38','2018-09-06 04:15:38');
 /*!40000 ALTER TABLE `tourists` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `touristselecttrips`
+--
+
+DROP TABLE IF EXISTS `touristselecttrips`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `touristselecttrips` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` varchar(191) DEFAULT 'waiting',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `touristId` int(10) DEFAULT NULL,
+  `tripId` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `touristSelectTrips_tripId_touristId_unique` (`touristId`,`tripId`),
+  KEY `tripId` (`tripId`),
+  CONSTRAINT `touristselecttrips_ibfk_1` FOREIGN KEY (`touristId`) REFERENCES `tourists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `touristselecttrips_ibfk_2` FOREIGN KEY (`tripId`) REFERENCES `trips` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `touristselecttrips`
+--
+
+LOCK TABLES `touristselecttrips` WRITE;
+/*!40000 ALTER TABLE `touristselecttrips` DISABLE KEYS */;
+/*!40000 ALTER TABLE `touristselecttrips` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -88,6 +119,7 @@ CREATE TABLE `trips` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(191) NOT NULL,
   `createdBy` varchar(191) NOT NULL,
+  `date` datetime NOT NULL,
   `createdAt` datetime DEFAULT NULL,
   `updatedAt` datetime DEFAULT NULL,
   `studentGuideId` int(10) DEFAULT NULL,
@@ -106,7 +138,7 @@ CREATE TABLE `trips` (
 
 LOCK TABLES `trips` WRITE;
 /*!40000 ALTER TABLE `trips` DISABLE KEYS */;
-INSERT INTO `trips` VALUES (1,'secondTrip','tourist','2018-09-05 07:06:52','2018-09-05 07:06:52',NULL,1),(2,'secondTrip','studentGuide','2018-09-05 07:07:27','2018-09-05 07:07:27',2,NULL);
+INSERT INTO `trips` VALUES (1,'firstTrip','studentGuide','2018-09-05 00:43:24','2018-09-06 04:19:48','2018-09-06 04:19:48',1,NULL),(2,'secondTrip','tourist','2018-09-05 00:43:24','2018-09-06 04:21:14','2018-09-06 04:21:14',NULL,1);
 /*!40000 ALTER TABLE `trips` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -119,4 +151,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-05 14:53:24
+-- Dump completed on 2018-09-06 12:21:30

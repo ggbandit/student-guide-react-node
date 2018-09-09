@@ -14,5 +14,6 @@ routes.studentGuideRoute(app)
 routes.touristRoute(app)
 routes.tripRoute(app)
 routes.AuthenRoute(app)
+routes.touristTripRoute(app)
 
 module.exports = app

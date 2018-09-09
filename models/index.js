@@ -28,7 +28,7 @@ model.op = op;
 model.studentGuides = require('./studentGuideModel')(sequelize, Sequelize);
 model.tourists = require('./touristModel')(sequelize, Sequelize);
 model.trips = require('./tripModel')(sequelize, Sequelize);
-model.touristSelectTrip = require('./touristSelectTripModel')(sequelize, Sequelize);
+model.touristTrip = require('./touristTripModel')(sequelize, Sequelize);
 
 model.studentGuides.hasMany(model.trips,{foreignKey: 'studentGuideId', sourceKey: 'id'});
 model.trips.belongsTo(model.studentGuides,{foreignKey: 'studentGuideId', targetKey: 'id'});
@@ -36,7 +36,7 @@ model.trips.belongsTo(model.studentGuides,{foreignKey: 'studentGuideId', targetK
 model.tourists.hasMany(model.trips,{foreignKey: 'touristId', sourceKey: 'id'});
 model.trips.belongsTo(model.tourists,{foreignKey: 'touristId', targetKey: 'id'});
 
-model.tourists.belongsToMany(model.trips, { through: model.touristSelectTrip, foreignKey: 'touristId', otherKey: 'tripId'});
-model.trips.belongsToMany(model.tourists, { through: model.touristSelectTrip, foreignKey: 'tripId', otherKey: 'touristId'});
+model.tourists.belongsToMany(model.trips, { through: model.touristTrip, foreignKey: 'touristId', otherKey: 'tripId'});
+model.trips.belongsToMany(model.tourists, { through: model.touristTrip, foreignKey: 'tripId', otherKey: 'touristId'});
 
 module.exports = model;

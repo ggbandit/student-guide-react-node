@@ -47,6 +47,38 @@ INSERT INTO `studentguides` VALUES (1,'first studentGuide','firststudentGuide@ho
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tourist_trips`
+--
+
+DROP TABLE IF EXISTS `tourist_trips`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tourist_trips` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `status` varchar(191) DEFAULT 'waiting',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `touristId` int(10) DEFAULT NULL,
+  `tripId` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tourist_Trips_tripId_touristId_unique` (`touristId`,`tripId`),
+  KEY `tripId` (`tripId`),
+  CONSTRAINT `tourist_trips_ibfk_1` FOREIGN KEY (`touristId`) REFERENCES `tourists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tourist_trips_ibfk_2` FOREIGN KEY (`tripId`) REFERENCES `trips` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tourist_trips`
+--
+
+LOCK TABLES `tourist_trips` WRITE;
+/*!40000 ALTER TABLE `tourist_trips` DISABLE KEYS */;
+INSERT INTO `tourist_trips` VALUES (1,'waiting','2018-09-08 08:31:36','2018-09-08 08:31:36',1,2),(4,'waiting','2018-09-08 08:33:57','2018-09-08 08:33:57',2,1),(5,'waiting','2018-09-08 08:34:47','2018-09-08 08:34:47',1,3),(6,'waiting','2018-09-08 08:35:19','2018-09-08 08:35:19',1,1);
+/*!40000 ALTER TABLE `tourist_trips` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tourists`
 --
 
@@ -78,37 +110,6 @@ INSERT INTO `tourists` VALUES (1,'first tourist','firstTourist@hotmail.com','fir
 UNLOCK TABLES;
 
 --
--- Table structure for table `touristselecttrips`
---
-
-DROP TABLE IF EXISTS `touristselecttrips`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `touristselecttrips` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `status` varchar(191) DEFAULT 'waiting',
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  `touristId` int(10) DEFAULT NULL,
-  `tripId` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `touristSelectTrips_tripId_touristId_unique` (`touristId`,`tripId`),
-  KEY `tripId` (`tripId`),
-  CONSTRAINT `touristselecttrips_ibfk_1` FOREIGN KEY (`touristId`) REFERENCES `tourists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `touristselecttrips_ibfk_2` FOREIGN KEY (`tripId`) REFERENCES `trips` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `touristselecttrips`
---
-
-LOCK TABLES `touristselecttrips` WRITE;
-/*!40000 ALTER TABLE `touristselecttrips` DISABLE KEYS */;
-/*!40000 ALTER TABLE `touristselecttrips` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `trips`
 --
 
@@ -129,7 +130,7 @@ CREATE TABLE `trips` (
   KEY `touristId` (`touristId`),
   CONSTRAINT `trips_ibfk_1` FOREIGN KEY (`studentGuideId`) REFERENCES `studentguides` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `trips_ibfk_2` FOREIGN KEY (`touristId`) REFERENCES `tourists` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +139,7 @@ CREATE TABLE `trips` (
 
 LOCK TABLES `trips` WRITE;
 /*!40000 ALTER TABLE `trips` DISABLE KEYS */;
-INSERT INTO `trips` VALUES (1,'firstTrip','studentGuide','2018-09-05 00:43:24','2018-09-06 04:19:48','2018-09-06 04:19:48',1,NULL),(2,'secondTrip','tourist','2018-09-05 00:43:24','2018-09-06 04:21:14','2018-09-06 04:21:14',NULL,1);
+INSERT INTO `trips` VALUES (1,'firstTrip','studentGuide','2018-09-05 00:43:24','2018-09-06 04:19:48','2018-09-06 04:19:48',1,NULL),(2,'secondTrip','tourist','2018-09-05 00:43:24','2018-09-06 04:21:14','2018-09-06 04:21:14',NULL,1),(3,'secondTrip','tourist','2018-09-05 00:43:24','2018-09-08 08:34:31','2018-09-08 08:34:31',NULL,1);
 /*!40000 ALTER TABLE `trips` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -151,4 +152,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-06 12:21:30
+-- Dump completed on 2018-09-16 23:29:00
